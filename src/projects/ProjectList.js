@@ -1,4 +1,3 @@
-import { checkPropTypes } from 'prop-types';
 import React from 'react';
 import { MOCK_PROJECTS } from './MockProjects';
 import PropTypes from 'prop-types';
