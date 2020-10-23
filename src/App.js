@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import ProjectsPage from './projects/ProjectsPage';
+import ProjectPage from './projects/ProjectPage';
 
 import {
   BrowserRouter as Router,
@@ -29,6 +30,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/projects" exact component={ProjectsPage} />
+          <Route path="/projects/:id" component={ProjectPage} />
         </Switch>
       </div>
     </Router>
