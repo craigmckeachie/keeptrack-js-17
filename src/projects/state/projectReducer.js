@@ -1,3 +1,4 @@
+import { Project } from '../Project';
 import {
   LOAD_PROJECTS_REQUEST,
   LOAD_PROJECTS_SUCCESS,
@@ -41,22 +42,22 @@ export function projectReducer(state = initialProjectState, action) {
     case SAVE_PROJECT_REQUEST:
       return { ...state };
     case SAVE_PROJECT_SUCCESS:
-      if (action.payload.isNew) {
+      let updatedProject = new Project(action.payload);
+      if (updatedProject.isNew()) {
         return {
           ...state,
-          projects: [...state.projects, action.payload],
+          projects: [...state.projects, updatedProject],
         };
       } else {
         return {
           ...state,
           projects: state.projects.map((project) => {
             return project.id === action.payload.id
-              ? Object.assign({}, project, action.payload)
+              ? Object.assign(new Project(), project, updatedProject)
               : project;
           }),
         };
       }
-
     case SAVE_PROJECT_FAILURE:
       return { ...state, error: action.payload.message };
     case DELETE_PROJECT_REQUEST:
