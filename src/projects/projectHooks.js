@@ -44,5 +44,3 @@ export function useProjects() {
 
   return [projects, loading, error, setCurrentPage, saveProject];
 }
-
-export function useSaveProject(project) {}
