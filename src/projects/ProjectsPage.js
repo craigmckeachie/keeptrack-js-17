@@ -1,16 +1,27 @@
 import React from 'react';
 import ProjectList from './ProjectList';
 import { useProjects } from './projectHooks';
+import { useState, useEffect } from 'react';
 
 function ProjectsPage() {
-  const [projects, loading, error, setCurrentPage, saveProject] = useProjects();
+  const [currentPage, setCurrentPage] = useState(1);
+  const {
+    data: projects = [],
+    isLoading: loading,
+    error,
+    refetch,
+  } = useProjects(currentPage);
+
+  useEffect(() => {
+    refetch(currentPage);
+  }, [currentPage, refetch]);
 
   const handleMoreClick = () => {
     setCurrentPage((currentPage) => currentPage + 1);
   };
 
   const handleSave = (project) => {
-    saveProject(project);
+    // saveProject(project);
   };
   return (
     <>
