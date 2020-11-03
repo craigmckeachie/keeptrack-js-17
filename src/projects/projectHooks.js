@@ -1,9 +1,13 @@
 import { projectAPI } from './projectAPI';
 // import { Project } from './Project';
-import { usePaginatedQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 
-export function useProjects(page) {
-  return usePaginatedQuery(['projects', page], () => projectAPI.get(page));
+export function useInfiniteProjects() {
+  return useInfiniteQuery('projects', (key, page = 0) => projectAPI.get(page), {
+    getFetchMore: (lastGroup, allGroups) => {
+      return allGroups.length + 1;
+    },
+  });
   // const [projects, setProjects] = useState([]);
   // const [loading, setLoading] = useState(false);
   // const [error, setError] = useState(undefined);

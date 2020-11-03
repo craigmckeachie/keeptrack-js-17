@@ -1,32 +1,28 @@
 import React from 'react';
 import ProjectList from './ProjectList';
-import { useProjects } from './projectHooks';
-import { useState, useEffect } from 'react';
+import { useInfiniteProjects } from './projectHooks';
+// import { useState, useEffect } from 'react';
 
 function ProjectsPage() {
-  const [currentPage, setCurrentPage] = useState(1);
   const {
-    data: projects = [],
+    data,
     isLoading: loading,
     error,
-    refetch,
-  } = useProjects(currentPage);
-
-  useEffect(() => {
-    refetch(currentPage);
-  }, [currentPage, refetch]);
+    canFetchMore,
+    fetchMore,
+  } = useInfiniteProjects();
 
   const handleMoreClick = () => {
-    setCurrentPage((currentPage) => currentPage + 1);
+    return fetchMore();
   };
 
   const handleSave = (project) => {
     // saveProject(project);
   };
+
   return (
     <>
       <h1>Projects</h1>
-
       {error && (
         <div className="row">
           <div className="card large error">
@@ -40,20 +36,29 @@ function ProjectsPage() {
         </div>
       )}
 
-      <ProjectList projects={projects} onSave={handleSave} />
-
+      {data?.map((projects, index) => (
+        <React.Fragment key={index}>
+          {/* {projects?.map((project) => {
+            return <p key={project.id}>{project.name}</p>;
+          })} */}
+          <ProjectList projects={projects} onSave={handleSave} />
+        </React.Fragment>
+      ))}
       {!loading && !error && (
         <div className="row">
           <div className="col-sm-12">
             <div className="button-group fluid">
-              <button className="button default" onClick={handleMoreClick}>
+              <button
+                disabled={!canFetchMore}
+                className="button default"
+                onClick={handleMoreClick}
+              >
                 More...
               </button>
             </div>
           </div>
         </div>
       )}
-
       {loading && (
         <div className="center-page">
           <span className="spinner primary"></span>
