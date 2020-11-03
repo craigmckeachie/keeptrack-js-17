@@ -41,12 +41,14 @@ function delay(ms) {
   };
 }
 
+export let pageSize = 20;
+
 const projectAPI = {
   find(id) {
     return fetch(`${url}/${id}`).then(checkStatus).then(parseJSON);
   },
 
-  get(page = 1, limit = 20) {
+  get(page = 1, limit = pageSize) {
     return (
       fetch(`${url}?_page=${page}&_limit=${limit}&_sort=name`)
         // .then(delay(600))

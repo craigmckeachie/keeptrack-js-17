@@ -1,11 +1,10 @@
 import React from 'react';
 import ProjectList from './ProjectList';
 import { useInfiniteProjects } from './projectHooks';
-// import { useState, useEffect } from 'react';
 
 function ProjectsPage() {
   const {
-    data,
+    data: pages,
     isLoading: loading,
     error,
     canFetchMore,
@@ -36,11 +35,8 @@ function ProjectsPage() {
         </div>
       )}
 
-      {data?.map((projects, index) => (
+      {pages?.map((projects, index) => (
         <React.Fragment key={index}>
-          {/* {projects?.map((project) => {
-            return <p key={project.id}>{project.name}</p>;
-          })} */}
           <ProjectList projects={projects} onSave={handleSave} />
         </React.Fragment>
       ))}
