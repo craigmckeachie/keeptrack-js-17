@@ -1,6 +1,6 @@
 import React from 'react';
 import ProjectList from './ProjectList';
-import { useInfiniteProjects } from './projectHooks';
+import { useInfiniteProjects, useSaveProject } from './projectHooks';
 
 function ProjectsPage() {
   const {
@@ -10,18 +10,46 @@ function ProjectsPage() {
     canFetchMore,
     fetchMore,
   } = useInfiniteProjects();
+  const [
+    saveProject,
+    { isLoading: isSaving, error: saveError },
+  ] = useSaveProject();
 
   const handleMoreClick = () => {
     return fetchMore();
   };
 
   const handleSave = (project) => {
-    // saveProject(project);
+    saveProject(project);
   };
 
   return (
     <>
       <h1>Projects</h1>
+
+      {isSaving && (
+        <div className="row">
+          <div className="card medium warning">
+            <section>
+              <p>Saving...</p>
+            </section>
+          </div>
+        </div>
+      )}
+
+      {saveError && (
+        <div className="row">
+          <div className="card large error">
+            <section>
+              <p>
+                <span className="icon-alert inverse "></span>
+                {saveError}
+              </p>
+            </section>
+          </div>
+        </div>
+      )}
+
       {error && (
         <div className="row">
           <div className="card large error">
