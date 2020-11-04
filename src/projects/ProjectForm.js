@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Project } from './Project';
+import { useSaveProject } from './projectHooks';
 
-function ProjectForm({ project: initialProject, onSave, onCancel }) {
+function ProjectForm({ project: initialProject, onCancel }) {
   const [project, setProject] = useState(initialProject);
   const [errors, setErrors] = useState({
     name: '',
     description: '',
     budget: '',
   });
+
+  const [
+    saveProject,
+    { isLoading: isSaving, error: saveError },
+  ] = useSaveProject();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!isValid()) return;
-    onSave(project);
+    saveProject(project);
   };
 
   function handleChange(event) {
@@ -121,6 +128,28 @@ function ProjectForm({ project: initialProject, onSave, onCancel }) {
         <button type="button" className="bordered medium" onClick={onCancel}>
           cancel
         </button>
+        {isSaving && (
+          <div className="row">
+            <div className="card medium warning">
+              <section>
+                <p>Saving...</p>
+              </section>
+            </div>
+          </div>
+        )}
+
+        {saveError && (
+          <div className="row">
+            <div className="card large error">
+              <section>
+                <p>
+                  <span className="icon-alert inverse "></span>
+                  {saveError}
+                </p>
+              </section>
+            </div>
+          </div>
+        )}
       </div>
     </form>
   );
@@ -129,7 +158,6 @@ function ProjectForm({ project: initialProject, onSave, onCancel }) {
 ProjectForm.propTypes = {
   project: PropTypes.instanceOf(Project),
   onCancel: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
 };
 
 export default ProjectForm;
