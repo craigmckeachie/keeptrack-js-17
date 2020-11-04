@@ -13,7 +13,7 @@ function ProjectForm({ project: initialProject, onCancel }) {
 
   const [
     saveProject,
-    { isLoading: isSaving, error: saveError },
+    { status: saveStatus, error: saveError },
   ] = useSaveProject();
 
   const handleSubmit = (event) => {
@@ -123,33 +123,20 @@ function ProjectForm({ project: initialProject, onCancel }) {
         onChange={handleChange}
       />
       <div className="input-group">
-        <button className="primary bordered medium">Save</button>
+        <button className="primary bordered medium">
+          {saveStatus === 'loading'
+            ? 'Saving...'
+            : saveStatus === 'error'
+            ? `Error!: ${saveError}`
+            : saveStatus === 'success'
+            ? 'Saved!'
+            : 'Save'
+          }
+        </button>
         <span />
         <button type="button" className="bordered medium" onClick={onCancel}>
           cancel
         </button>
-        {isSaving && (
-          <div className="row">
-            <div className="card medium warning">
-              <section>
-                <p>Saving...</p>
-              </section>
-            </div>
-          </div>
-        )}
-
-        {saveError && (
-          <div className="row">
-            <div className="card large error">
-              <section>
-                <p>
-                  <span className="icon-alert inverse "></span>
-                  {saveError}
-                </p>
-              </section>
-            </div>
-          </div>
-        )}
       </div>
     </form>
   );
