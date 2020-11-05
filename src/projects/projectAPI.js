@@ -49,15 +49,22 @@ const projectAPI = {
   },
 
   get(page = 1, limit = pageSize) {
+    const results = { data: null, totalCount: 0 };
     return (
       fetch(`${url}?_page=${page}&_limit=${limit}&_sort=name`)
         // .then(delay(600))
         .then(checkStatus)
+        .then((response) => {
+          results.totalCount = response.headers.get('X-Total-Count');
+          return response;
+        })
         .then(parseJSON)
         .then((projects) => {
-          return projects.map((p) => {
+          const data = projects.map((p) => {
             return new Project(p);
           });
+          results.data = data;
+          return results;
         })
         .catch((error) => {
           console.log('log client error ' + error);

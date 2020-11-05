@@ -3,13 +3,27 @@ import { pageSize, projectAPI } from './projectAPI';
 import { useInfiniteQuery, useMutation, queryCache } from 'react-query';
 
 export function useInfiniteProjects() {
-  return useInfiniteQuery('projects', (key, page = 1) => projectAPI.get(page), {
-    getFetchMore: (lastGroup, allGroups) => {
-      const morePagesExist = lastGroup?.length === pageSize;
-      if (!morePagesExist) return false;
-      return allGroups.length + 1;
-    },
-  });
+  let totalCount = 0;
+  let currentPage = 0;
+  return useInfiniteQuery(
+    'projects',
+    (key, page = 1) =>
+      projectAPI.get(page).then((results) => {
+        currentPage = page;
+        totalCount = results.totalCount;
+        return results.data;
+      }),
+
+    {
+      getFetchMore: (lastGroup, allGroups) => {
+        const morePagesExist = lastGroup?.length === pageSize;
+        // const lastPage = Math.ceil(totalCount / pageSize);
+        // const morePagesExist = currentPage !== lastPage;
+        if (!morePagesExist) return false;
+        return allGroups.length + 1;
+      },
+    }
+  );
 }
 
 export function useSaveProject() {
