@@ -1,9 +1,11 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('renders home heading', () => {
+  render(<App />);
+  const heading = screen.getByRole('heading', {
+    name: /home/i,
+  });
+  expect(heading).toBeInTheDocument();
 });
