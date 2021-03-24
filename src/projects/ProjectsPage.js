@@ -9,6 +9,7 @@ function ProjectsPage() {
     error,
     canFetchMore,
     fetchMore,
+    isFetching,
   } = useInfiniteProjects();
 
   const handleMoreClick = () => {
@@ -17,7 +18,12 @@ function ProjectsPage() {
 
   return (
     <>
-      <h1>Projects</h1>
+      <h1>
+        Projects{' '}
+        {isFetching && !loading && <span className="spinner primary"></span>}
+      </h1>
+
+      {/* {isFetching && !loading && <p>Refreshing...</p>} */}
 
       {error && (
         <div className="row">
