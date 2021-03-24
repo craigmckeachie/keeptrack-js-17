@@ -3,10 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { QueryCache, ReactQueryCacheProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query-devtools';
+
+const queryCache = new QueryCache();
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ReactQueryCacheProvider queryCache={queryCache}>
+      <App />
+      <ReactQueryDevtools initialIsOpen />
+    </ReactQueryCacheProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
