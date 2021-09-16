@@ -1,7 +1,6 @@
 import { pageSize, projectAPI } from './projectAPI';
 // import { Project } from './Project';
-import { useInfiniteQuery, useMutation } from 'react-query';
-import { queryCache } from '../index';
+import { useInfiniteQuery, useMutation, useQueryCache } from 'react-query';
 
 export function useInfiniteProjects() {
   return useInfiniteQuery('projects', (key, page = 1) => projectAPI.get(page), {
@@ -14,6 +13,7 @@ export function useInfiniteProjects() {
 }
 
 export function useSaveProject() {
+  const queryCache = useQueryCache();
   return useMutation(
     (project) => {
       return projectAPI.put(project);
@@ -26,7 +26,6 @@ export function useSaveProject() {
       },
       onSuccess: (data, variables, context) => {
         // Boom baby!
-        console.log('success', data);
         queryCache.refetchQueries('projects');
       },
       onSettled: (data, error, variables, context) => {

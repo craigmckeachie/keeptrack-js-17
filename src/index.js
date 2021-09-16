@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import { QueryCache, ReactQueryCacheProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query-devtools';
 
-export const queryCache = new QueryCache();
+const queryCache = new QueryCache();
 
 ReactDOM.render(
   <React.StrictMode>
