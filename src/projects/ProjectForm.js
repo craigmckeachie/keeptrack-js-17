@@ -11,14 +11,13 @@ function ProjectForm({ project: initialProject, onCancel }) {
     budget: '',
   });
 
-  const [
-    saveProject,
-    { status: saveStatus, error: saveError },
-  ] = useSaveProject();
+  const [saveProject, { status: saveStatus, error: saveError }] =
+    useSaveProject();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!isValid()) return;
+    // onCancel();
     saveProject(project);
   };
 
@@ -130,8 +129,7 @@ function ProjectForm({ project: initialProject, onCancel }) {
             ? `Error!: ${saveError}`
             : saveStatus === 'success'
             ? 'Saved!'
-            : 'Save'
-          }
+            : 'Save'}
         </button>
         <span />
         <button type="button" className="bordered medium" onClick={onCancel}>
