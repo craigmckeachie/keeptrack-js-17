@@ -3,12 +3,7 @@ import { useProjects } from './projectHooks';
 import ProjectList from './ProjectList';
 
 function ProjectsPage() {
-  const {
-    data: projects,
-    error,
-    isLoading: loading,
-    setCurrentPage,
-  } = useProjects();
+  const { projects, error, isLoading: loading, setCurrentPage } = useProjects();
 
   const handleMoreClick = () => {
     setCurrentPage((currentPage) => currentPage + 1);
