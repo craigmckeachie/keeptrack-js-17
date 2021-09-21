@@ -11,14 +11,20 @@ function ProjectsPage() {
 
   return (
     <>
-      <h1>Projects</h1>
-
-      {!loading && fetching && (
-        <div>
-          <span className="spinner primary"></span>
-          <p>Refreshing...</p>
-        </div>
-      )}
+      <h1>
+        Projects
+        {!loading && fetching && (
+          <span
+            style={{
+              fontWeight: 'normal',
+              fontSize: 'medium',
+              marginLeft: '30px',
+            }}
+          >
+            Refreshing...
+          </span>
+        )}
+      </h1>
 
       {error && (
         <div className="row">
