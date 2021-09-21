@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Project } from './Project';
+import { useMutation } from 'react-query';
+import { useSaveProject } from './projectHooks';
 
 function ProjectForm({ project: initialProject, onSave, onCancel }) {
   const [project, setProject] = useState(initialProject);
@@ -9,10 +11,13 @@ function ProjectForm({ project: initialProject, onSave, onCancel }) {
     description: '',
     budget: '',
   });
+  const [saveProject, { isLoading: saving, error: saveError }] =
+    useSaveProject();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!isValid()) return;
-    onSave(project);
+    saveProject(project);
   };
 
   function handleChange(event) {

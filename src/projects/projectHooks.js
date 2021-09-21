@@ -1,5 +1,5 @@
 import { projectAPI } from './projectAPI';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 export function useProjects() {
   const {
@@ -9,4 +9,11 @@ export function useProjects() {
   } = useQuery('projects', () => projectAPI.get(1));
 
   return { projects, loading, error, setCurrentPage: () => {} };
+}
+
+export function useSaveProject() {
+  const queryClient = useQueryClient();
+  return useMutation((project) => projectAPI.put(project), {
+    onSuccess: () => queryClient.refetchQueries('projects'),
+  });
 }
