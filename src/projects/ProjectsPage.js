@@ -3,7 +3,7 @@ import { useProjects } from './projectHooks';
 import ProjectList from './ProjectList';
 
 function ProjectsPage() {
-  const { projects, error, loading, setCurrentPage } = useProjects();
+  const { projects, error, loading, fetching, setCurrentPage } = useProjects();
 
   const handleMoreClick = () => {
     setCurrentPage((currentPage) => currentPage + 1);
@@ -26,6 +26,13 @@ function ProjectsPage() {
   return (
     <>
       <h1>Projects</h1>
+
+      {!loading && fetching && (
+        <div>
+          <span className="spinner primary"></span>
+          <p>Refreshing...</p>
+        </div>
+      )}
 
       {error && (
         <div className="row">

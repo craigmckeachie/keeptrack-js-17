@@ -6,9 +6,10 @@ export function useProjects() {
     data: projects,
     isLoading: loading,
     error,
+    isFetching: fetching,
   } = useQuery('projects', () => projectAPI.get(1));
 
-  return { projects, loading, error, setCurrentPage: () => {} };
+  return { projects, loading, error, fetching, setCurrentPage: () => {} };
 }
 
 export function useSaveProject() {
