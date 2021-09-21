@@ -33,7 +33,7 @@ function ProjectsPage() {
             <section>
               <p>
                 <span className="icon-alert inverse "></span>
-                {error}
+                {error.message}
               </p>
             </section>
           </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Project } from './Project';
-import { useMutation } from 'react-query';
+
 import { useSaveProject } from './projectHooks';
 
 function ProjectForm({ project: initialProject, onSave, onCancel }) {
@@ -11,8 +11,7 @@ function ProjectForm({ project: initialProject, onSave, onCancel }) {
     description: '',
     budget: '',
   });
-  const [saveProject, { isLoading: saving, error: saveError }] =
-    useSaveProject();
+  const { mutate: saveProject, status: saveStatus, error } = useSaveProject();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -121,7 +120,15 @@ function ProjectForm({ project: initialProject, onSave, onCancel }) {
         onChange={handleChange}
       />
       <div className="input-group">
-        <button className="primary bordered medium">Save</button>
+        <button className="primary bordered medium">
+          {saveStatus === 'loading'
+            ? 'Saving...'
+            : saveStatus === 'error'
+            ? `${error}`
+            : saveStatus === 'success'
+            ? 'Saved!'
+            : 'Save'}
+        </button>
         <span />
         <button type="button" className="bordered medium" onClick={onCancel}>
           cancel
