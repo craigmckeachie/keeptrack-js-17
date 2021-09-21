@@ -32,7 +32,6 @@ function ProjectList({ projects, onSave }) {
 
 ProjectList.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.instanceOf(Project)).isRequired,
-  onSave: PropTypes.func.isRequired,
 };
 
 export default ProjectList;
