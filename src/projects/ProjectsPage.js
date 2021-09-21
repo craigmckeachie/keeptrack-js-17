@@ -3,7 +3,7 @@ import { useProjects } from './projectHooks';
 import ProjectList from './ProjectList';
 
 function ProjectsPage() {
-  const { projects, error, isLoading: loading, setCurrentPage } = useProjects();
+  const { projects, error, loading, setCurrentPage } = useProjects();
 
   const handleMoreClick = () => {
     setCurrentPage((currentPage) => currentPage + 1);
@@ -40,7 +40,7 @@ function ProjectsPage() {
         </div>
       )}
 
-      {!loading && !error && projects && (
+      {!loading && !error && (
         <ProjectList projects={projects} onSave={saveProject} />
       )}
 
