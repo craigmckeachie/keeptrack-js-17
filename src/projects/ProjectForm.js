@@ -4,7 +4,7 @@ import { Project } from './Project';
 
 import { useSaveProject } from './projectHooks';
 
-function ProjectForm({ project: initialProject, onSave, onCancel }) {
+function ProjectForm({ project: initialProject, onCancel }) {
   const [project, setProject] = useState(initialProject);
   const [errors, setErrors] = useState({
     name: '',
@@ -141,7 +141,6 @@ function ProjectForm({ project: initialProject, onSave, onCancel }) {
 ProjectForm.propTypes = {
   project: PropTypes.instanceOf(Project),
   onCancel: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
 };
 
 export default ProjectForm;

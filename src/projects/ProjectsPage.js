@@ -9,20 +9,6 @@ function ProjectsPage() {
     setCurrentPage((currentPage) => currentPage + 1);
   };
 
-  const saveProject = (project) => {
-    throw Error('Not implemented');
-    // projectAPI
-    //   .put(project)
-    //   .then((updatedProject) => {
-    //     let updatedProjects = projects.map((p) => {
-    //       return p.id === project.id ? new Project(updatedProject) : p;
-    //     });
-    //     setProjects(updatedProjects);
-    //   })
-    //   .catch((e) => {
-    //     setError(e.message);
-    //   });
-  };
   return (
     <>
       <h1>Projects</h1>
@@ -47,9 +33,7 @@ function ProjectsPage() {
         </div>
       )}
 
-      {!loading && !error && (
-        <ProjectList projects={projects} onSave={saveProject} />
-      )}
+      {!loading && !error && <ProjectList projects={projects} />}
 
       {!loading && !error && projects && (
         <div className="row">
