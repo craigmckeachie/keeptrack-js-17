@@ -3,8 +3,8 @@ import { useProjects } from './projectHooks';
 import ProjectList from './ProjectList';
 
 function ProjectsPage() {
-  const { projects, loading, error, setCurrentPage } = useProjects();
-
+  const { projects, loading, error, isFetching, setCurrentPage } =
+    useProjects();
 
   const handleMoreClick = () => {
     setCurrentPage((currentPage) => currentPage + 1);
@@ -25,7 +25,20 @@ function ProjectsPage() {
   };
   return (
     <>
-      <h1>Projects</h1>
+      <h1>
+        Projects{' '}
+        {!loading && isFetching && (
+          <span
+            style={{
+              fontWeight: 'normal',
+              fontSize: 'medium',
+              marginLeft: '30px',
+            }}
+          >
+            Refreshing...
+          </span>
+        )}{' '}
+      </h1>
 
       {error && (
         <div className="row">
@@ -40,7 +53,7 @@ function ProjectsPage() {
         </div>
       )}
 
-      <ProjectList projects={projects} onSave={saveProject} />
+      {!loading && !error && projects && <ProjectList projects={projects} />}
 
       {!loading && !error && (
         <div className="row">
