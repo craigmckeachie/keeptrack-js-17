@@ -7,6 +7,7 @@
     "@testing-library/react": "~9.5.0",
     "@testing-library/user-event": "~7.2.1",
     "json-server": "~0.16.2",
+    "jsonwebtoken": "~8.5.1",
     "mini.css": "~3.0.1",
     "prop-types": "~15.7.2",
     "react": "^17.0.1",
@@ -19,7 +20,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "api": "json-server api/db.json --port 4000"
+    "api": "json-server api/db.json --port 4000",
+    "api:auth": "node ./api/auth-api-server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
