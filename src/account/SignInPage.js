@@ -9,7 +9,7 @@ function SignInPage() {
           <span className="icon-alert inverse" />
         </p>
       </div>
-      <form className="input-group vertical">
+      <form className="input-group vertical" style={{ width: '400px' }}>
         <label htmlFor="email">Email</label>
         <input id="email" type="text" placeholder="email" />
         <label htmlFor="password">Password</label>
