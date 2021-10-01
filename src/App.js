@@ -10,6 +10,8 @@ import {
   Switch,
 } from 'react-router-dom';
 import HomePage from './home/HomePage';
+import SignInPage from './account/SignInPage';
+import AccountHeader from './account/AccountHeader';
 
 function App() {
   return (
@@ -25,12 +27,14 @@ function App() {
         <NavLink to="/projects/" className="button rounded">
           Projects
         </NavLink>
+        <AccountHeader />
       </header>
       <div className="container">
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/projects" exact component={ProjectsPage} />
           <Route path="/projects/:id" component={ProjectPage} />
+          <Route path="/signin" exact component={SignInPage} />
         </Switch>
       </div>
     </Router>
