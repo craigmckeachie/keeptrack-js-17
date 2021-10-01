@@ -10,7 +10,7 @@ function ProjectsPage() {
     error,
     setCurrentPage,
     saveProject,
-    // saving,
+    saving,
     savingError,
   } = useProjects();
 
@@ -21,6 +21,7 @@ function ProjectsPage() {
   return (
     <>
       <h1>Projects</h1>
+      {saving && <span className="toast">Saving...</span>}
 
       {(error || savingError) && (
         <div className="row">
