@@ -7,17 +7,19 @@ import { useAuth } from './useAuth';
 // screen if you're not yet authenticated.
 function PrivateRoute({ children, ...rest }) {
   let auth = useAuth();
-  console.log(children);
+
+  // function renderChildrenWithTheseProps(children, props) {}
+
   return (
     <Route
       {...rest}
       render={(props) =>
         auth.getUser() ? (
-          <div>
+          <>
             {React.Children.map(children, (child) =>
               React.cloneElement(child, { ...props })
             )}
-          </div>
+          </>
         ) : (
           <Redirect
             to={{
