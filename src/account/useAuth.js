@@ -4,6 +4,12 @@ const baseUrl = 'http://localhost:4000';
 
 const authContext = createContext();
 
+// https://stackoverflow.com/a/69058154/48175
+// function isTokenExpired(token) {
+//   const expiry = JSON.parse(atob(token.split('.')[1])).exp;
+//   return Math.floor(new Date().getTime() / 1000) >= expiry;
+// }
+
 // Provider component that wraps your app and makes auth object ...
 // ... available to any child component that calls useAuth().
 export function ProvideAuth({ children }) {
@@ -36,7 +42,6 @@ function useProvideAuth() {
   };
 
   const getUser = () => {
-    const token = getToken();
     return token ? jwt_decode(token) : null;
   };
 
@@ -70,25 +75,8 @@ function useProvideAuth() {
     removeToken();
   };
 
-  // Subscribe to user on mount
-  // Because this sets state in the callback it will cause any ...
-  // ... component that utilizes this hook to re-render with the ...
-  // ... latest auth object.
-  //   useEffect(() => {
-  //     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-  //       if (user) {
-  //         setUser(user);
-  //       } else {
-  //         setUser(false);
-  //       }
-  //     });
-  //     // Cleanup subscription on unmount
-  //     return () => unsubscribe();
-  //   }, []);
-
-  // Return the user object and auth methods
   return {
-    getToken,
+    token,
     getUser,
     signin,
     signout,

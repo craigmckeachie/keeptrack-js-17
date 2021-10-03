@@ -14,7 +14,7 @@ function ProjectPage(props) {
   useEffect(() => {
     setLoading(true);
     projectAPI
-      .find(id, auth.getToken())
+      .find(id, auth.token)
       .then((data) => {
         setProject(data);
         setLoading(false);

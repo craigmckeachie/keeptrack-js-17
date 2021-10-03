@@ -15,7 +15,7 @@ function ProjectsPage() {
     async function loadProjects() {
       setLoading(true);
       try {
-        const data = await projectAPI.get(currentPage, 20, auth.getToken());
+        const data = await projectAPI.get(currentPage, 20, auth.token);
         if (currentPage === 1) {
           setProjects(data);
         } else {
