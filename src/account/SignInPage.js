@@ -1,19 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import { useAuth } from './useAuth';
 
 function SignInPage() {
+  let history = useHistory();
+  let location = useLocation();
+  let auth = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  let { from } = location.state || { from: { pathname: '/' } };
+  const signin = (event) => {
+    event.preventDefault();
+    auth
+      .signin(email, password)
+      .then((authenticated) => {
+        if (authenticated) {
+          history.replace(from);
+        }
+      })
+      .catch((error) => setErrorMessage(error.message));
+  };
+
   return (
     <>
       <h1>Sign In</h1>
-      <div className="card large error">
-        <p>
-          <span className="icon-alert inverse" />
-        </p>
-      </div>
-      <form className="input-group vertical" style={{ width: '400px' }}>
+
+      {errorMessage && (
+        <div className="card large error">
+          <p>
+            <span className="icon-alert inverse" />
+            {errorMessage}
+          </p>
+        </div>
+      )}
+
+      <form
+        onSubmit={signin}
+        className="input-group vertical"
+        style={{ width: '400px' }}
+      >
         <label htmlFor="email">Email</label>
-        <input id="email" type="text" placeholder="email" />
+        <input
+          id="email"
+          type="text"
+          placeholder="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
         <label htmlFor="password">Password</label>
-        <input type="password" placeholder="password" />
+        <input
+          type="password"
+          placeholder="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
         <div className="input-group">
           <button className="primary bordered medium">Sign In</button>
         </div>
