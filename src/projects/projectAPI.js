@@ -43,7 +43,10 @@ function delay(ms) {
 
 const projectAPI = {
   find(id, token) {
-    return fetch(`${url}/${id}`).then(checkStatus).then(parseJSON);
+    const requestInit = {
+      headers: { Authorization: 'Bearer ' + token },
+    };
+    return fetch(`${url}/${id}`, requestInit).then(checkStatus).then(parseJSON);
   },
 
   get(page = 1, limit = 20, token) {

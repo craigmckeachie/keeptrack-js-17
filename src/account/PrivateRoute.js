@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { cloneElement } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 import { useAuth } from './useAuth';
@@ -10,14 +10,14 @@ function PrivateRoute({ children, ...rest }) {
   return (
     <Route
       {...rest}
-      render={({ location }) =>
+      render={(props) =>
         auth.getUser() ? (
           children
         ) : (
           <Redirect
             to={{
               pathname: '/signin',
-              state: { from: location },
+              state: { from: props.location },
             }}
           />
         )

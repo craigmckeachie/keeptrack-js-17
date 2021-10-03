@@ -38,7 +38,7 @@ function App() {
             <PrivateRoute path="/projects" exact>
               <ProjectsPage />
             </PrivateRoute>
-            <PrivateRoute path="/projects/:id" exact>
+            <PrivateRoute path="/projects/:id">
               <ProjectPage />
             </PrivateRoute>
             <Route path="/signin" exact component={SignInPage} />
