@@ -8,18 +8,22 @@ import { useAuth } from './useAuth';
 function PrivateRoute({ children, ...rest }) {
   let auth = useAuth();
 
-  // function renderChildrenWithTheseProps(children, props) {}
+  function renderChildrenWithTheseProps(children, props) {
+    return (
+      <>
+        {React.Children.map(children, (child) =>
+          React.cloneElement(child, { ...props })
+        )}
+      </>
+    );
+  }
 
   return (
     <Route
       {...rest}
       render={(props) =>
         auth.getUser() ? (
-          <>
-            {React.Children.map(children, (child) =>
-              React.cloneElement(child, { ...props })
-            )}
-          </>
+          renderChildrenWithTheseProps(children, props)
         ) : (
           <Redirect
             to={{
