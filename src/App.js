@@ -38,9 +38,10 @@ function App() {
             <PrivateRoute path="/projects" exact>
               <ProjectsPage />
             </PrivateRoute>
-            <PrivateRoute path="/projects/:id">
+            <PrivateRoute path="/projects/:id" exact>
               <ProjectPage />
             </PrivateRoute>
+
             <Route path="/signin" exact component={SignInPage} />
           </Switch>
         </div>

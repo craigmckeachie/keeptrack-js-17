@@ -1,4 +1,4 @@
-import React, { cloneElement } from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 import { useAuth } from './useAuth';
@@ -7,12 +7,17 @@ import { useAuth } from './useAuth';
 // screen if you're not yet authenticated.
 function PrivateRoute({ children, ...rest }) {
   let auth = useAuth();
+  console.log(children);
   return (
     <Route
       {...rest}
       render={(props) =>
         auth.getUser() ? (
-          children
+          <div>
+            {React.Children.map(children, (child) =>
+              React.cloneElement(child, { ...props })
+            )}
+          </div>
         ) : (
           <Redirect
             to={{
