@@ -71,12 +71,13 @@ const projectAPI = {
     );
   },
 
-  put(project) {
+  put(project, token) {
     return fetch(`${url}/${project.id}`, {
       method: 'PUT',
       body: JSON.stringify(project),
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
       },
     })
       .then(checkStatus)

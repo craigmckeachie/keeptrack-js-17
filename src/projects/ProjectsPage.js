@@ -36,7 +36,7 @@ function ProjectsPage() {
 
   const saveProject = (project) => {
     projectAPI
-      .put(project)
+      .put(project, auth.token)
       .then((updatedProject) => {
         let updatedProjects = projects.map((p) => {
           return p.id === project.id ? new Project(updatedProject) : p;
