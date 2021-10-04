@@ -1,6 +1,6 @@
 import React, { useState, useContext, createContext } from 'react';
 import jwt_decode from 'jwt-decode';
-const baseUrl = 'http://localhost:4000';
+const baseUrl = process.env.REACT_APP_API_URL;
 
 const authContext = createContext();
 

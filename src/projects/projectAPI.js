@@ -1,7 +1,6 @@
 import { Project } from './Project';
 
-const baseUrl = 'http://localhost:4000';
-const url = `${baseUrl}/projects`;
+const url = `${process.env.REACT_APP_API_URL}/projects`;
 
 function translateStatusToErrorMessage(status) {
   switch (status) {
