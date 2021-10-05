@@ -4,39 +4,31 @@ import ProjectList from './ProjectList';
 import { useProjects } from './projectHooks';
 
 function ProjectsPage() {
-  const {
-    projects,
-    loading,
-    error,
-    setCurrentPage,
-    saveProject,
-    saving,
-    savingError,
-  } = useProjects();
+  const { projects, loading, error, isFetching, setPage } = useProjects();
 
   const handleMoreClick = () => {
-    setCurrentPage((currentPage) => currentPage + 1);
+    setPage((currentPage) => currentPage + 1);
   };
 
   return (
     <>
       <h1>Projects</h1>
-      {saving && <span className="toast">Saving...</span>}
+      {isFetching && <span className="toast">Refreshing...</span>}
 
-      {(error || savingError) && (
+      {error && (
         <div className="row">
           <div className="card large error">
             <section>
               <p>
                 <span className="icon-alert inverse "></span>
-                {error} {savingError}
+                {error.message}
               </p>
             </section>
           </div>
         </div>
       )}
 
-      <ProjectList projects={projects} onSave={saveProject} />
+      {!loading && !error && <ProjectList projects={projects} />}
 
       {!loading && !error && (
         <div className="row">
