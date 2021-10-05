@@ -5,25 +5,12 @@ import { useState } from 'react';
 export function useProjects() {
   const [page, setPage] = useState(0);
 
-  const {
-    isLoading: loading,
-    isError,
-    error,
-    data: projects,
-    isFetching,
-  } = useQuery(['projects', page], () => projectAPI.get(page), {
+  let queryInfo = useQuery(['projects', page], () => projectAPI.get(page + 1), {
     keepPreviousData: true,
     staleTime: 5000,
   });
 
-  return {
-    projects,
-    loading,
-    isError,
-    error,
-    isFetching,
-    setPage,
-  };
+  return { ...queryInfo, page, setPage };
 }
 
 export function useSaveProject() {
@@ -32,8 +19,3 @@ export function useSaveProject() {
     onSuccess: () => queryClient.invalidateQueries('projects'),
   });
 }
-
-// setCurrentPage,
-//     saving,
-//     savingError,
-//     saveProject,
