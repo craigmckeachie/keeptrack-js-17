@@ -74,5 +74,5 @@ server.use(/^(?!\/auth).*$/, async (req, res, next) => {
 server.use(router);
 
 server.listen(4000, () => {
-  console.log('Running Auth API Server on port 3000');
+  console.log('Running Auth API Server on port 4000');
 });
