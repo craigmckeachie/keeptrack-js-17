@@ -22,7 +22,7 @@ import renderer from 'react-test-renderer';
 
 describe('<HomePage />', () => {
   test('should render without crashing', () => {
-    render(<App />);
+    render(<HomePage />);
   });
 
   test('snapshot', () => {
