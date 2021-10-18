@@ -41,4 +41,8 @@ export const store = configureStore({
   reducer: {
     projectState: projectsSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });

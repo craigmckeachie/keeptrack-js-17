@@ -23,4 +23,8 @@ export class Project {
     if (initializer.budget) this.budget = initializer.budget;
     if (initializer.isActive) this.isActive = initializer.isActive;
   }
+
+  // isNew() {
+  //   return this.id === undefined;
+  // }
 }

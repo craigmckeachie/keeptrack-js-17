@@ -42,8 +42,13 @@ export const projectsSlice = createSlice({
 
     builder.addCase(loadProjects.fulfilled, (state, action) => {
       state.loading = false;
+      state.loadingError = undefined;
       state.page = action.payload.page;
-      state.projects = [...state.projects, ...action.payload.projects];
+      if (state.page === 1) {
+        state.projects = action.payload.projects;
+      } else {
+        state.projects = [...state.projects, ...action.payload.projects];
+      }
     });
 
     builder.addCase(loadProjects.rejected, (state, action) => {
