@@ -10,6 +10,12 @@ function ProjectsPage() {
   return (
     <>
       <h1>Projects</h1>
+      {isLoading && (
+        <div className="center-page">
+          <span className="spinner primary"></span>
+          <p>Loading...</p>
+        </div>
+      )}
       {isFetching && <span className="toast">Refreshing...</span>}
       {error && (
         <div className="row">
@@ -39,12 +45,6 @@ function ProjectsPage() {
       >
         Next Page
       </button>
-      {isLoading && (
-        <div className="center-page">
-          <span className="spinner primary"></span>
-          <p>Loading...</p>
-        </div>
-      )}
     </>
   );
 }
