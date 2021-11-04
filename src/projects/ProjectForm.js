@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Project } from './Project';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Project } from "./Project";
 
 function ProjectForm({ project: initialProject, onSave, onCancel }) {
   const [project, setProject] = useState(initialProject);
   const [errors, setErrors] = useState({
-    name: '',
-    description: '',
-    budget: '',
+    name: "",
+    description: "",
+    budget: ""
   });
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault();
     if (!isValid()) return;
     onSave(project);
@@ -19,14 +19,14 @@ function ProjectForm({ project: initialProject, onSave, onCancel }) {
     const { type, name, value, checked } = event.target;
     // if input type is checkbox use checked
     // otherwise it's type is text, number etc. so use value
-    let updatedValue = type === 'checkbox' ? checked : value;
+    let updatedValue = type === "checkbox" ? checked : value;
 
     //if input type is number convert the updatedValue string to a +number
-    if (type === 'number') {
+    if (type === "number") {
       updatedValue = Number(updatedValue);
     }
     const change = {
-      [name]: updatedValue,
+      [name]: updatedValue
     };
 
     let updatedProject;
@@ -35,26 +35,30 @@ function ProjectForm({ project: initialProject, onSave, onCancel }) {
     // so we can keep the project properties that aren't being edited +like project.id
     // the spread operator (...) is used to
     // spread the previous project properties and the new change
-    setProject((p) => {
+    setProject(p => {
       updatedProject = new Project({ ...p, ...change });
       return updatedProject;
     });
-    setErrors(() => validate(updatedProject));
+    // setErrors(() => validate(updatedProject));
   }
 
+  useEffect(() => {
+    setErrors(() => validate(project));
+  }, [project]);
+
   function validate(project) {
-    let errors = { name: '', description: '', budget: '' };
+    let errors = { name: "", description: "", budget: "" };
     if (project.name.length === 0) {
-      errors.name = 'Name is required';
+      errors.name = "Name is required";
     }
     if (project.name.length > 0 && project.name.length < 3) {
-      errors.name = 'Name needs to be at least 3 characters.';
+      errors.name = "Name needs to be at least 3 characters.";
     }
     if (project.description.length === 0) {
-      errors.description = 'Description is required.';
+      errors.description = "Description is required.";
     }
     if (project.budget === 0) {
-      errors.budget = 'Budget must be more than $0.';
+      errors.budget = "Budget must be more than $0.";
     }
     return errors;
   }
@@ -129,7 +133,7 @@ function ProjectForm({ project: initialProject, onSave, onCancel }) {
 ProjectForm.propTypes = {
   project: PropTypes.instanceOf(Project),
   onCancel: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired
 };
 
 export default ProjectForm;
