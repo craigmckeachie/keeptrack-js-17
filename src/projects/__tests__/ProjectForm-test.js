@@ -84,7 +84,6 @@ describe('<ProjectForm />', () => {
     setup();
     const user = userEvent.setup();
     await user.clear(nameTextBox);
-    screen.logTestingPlaygroundURL();
 
     expect(screen.getByRole('alert')).toBeInTheDocument();
     expect(screen.getByRole('alert')).toHaveTextContent(/name is required$/i);
