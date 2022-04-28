@@ -75,7 +75,25 @@ describe('<ProjectsPage />', () => {
     renderComponent();
 
     expect(
-      await screen.findByText(/There was an error retrieving the project(s)./i)
+      await screen.findByText(/There was an error retrieving the project./i)
+    ).toBeInTheDocument();
+  });
+
+  test('should display permission denied error message', async () => {
+    server.use(
+      rest.get(projectsUrl, (req, res, ctx) => {
+        return res(ctx.status(403, 'Unauthorized'));
+      })
+    );
+    renderComponent();
+
+    // expect(
+    //   await screen.findByText(/There was an error retrieving the project\(s\)./i)
+    // ).toBeInTheDocument();
+    expect(
+      await screen.findByText(
+        /You do not have permission to view the project./i
+      )
     ).toBeInTheDocument();
   });
 });

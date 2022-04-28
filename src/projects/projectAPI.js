@@ -59,9 +59,7 @@ const projectAPI = {
         })
         .catch((error) => {
           console.log('log client error ' + error);
-          throw new Error(
-            'There was an error retrieving the projects. Please try again.'
-          );
+          throw new Error(error.message);
         })
     );
   },
